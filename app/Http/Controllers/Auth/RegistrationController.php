@@ -61,7 +61,7 @@ class RegistrationController extends Controller
 
         $latestRecord = DB::connection('partner_manager')->table('partners')->latest('id')->first('id');
         $newId = $latestRecord->id + 1;
-
+        dd($latestRecord);
         $registeredParams = [
             'tg' => $request->getTelegramm(),
             'sources' => $request->getSourceName(),
@@ -79,7 +79,7 @@ class RegistrationController extends Controller
 
         $partner = DB::connection('partner_manager')->table('partners')->insert($partnerData);
         $newPartner = (object)$partnerData;
-dd($latestRecord);
+
   if ($partner){
 
       $sourceData = [
