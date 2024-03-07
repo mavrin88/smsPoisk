@@ -36,20 +36,21 @@ class RegistrationController extends Controller
     {
         $passwordHash = Hash::make($request->getPassword());
 
-//        $user = User::create([
-////            'id' => $partner->id,
-//            'name' => $request->getName(),
-////            'name' => $request->getName(),
-//            'email' => $request->getEmail(),
-//            'password' => $passwordHash,
-////            'account_id' => 10,
-////            'source_id' => $sorce->id,
-////            'partner_id' => $partner->id,
-////            'telegram' => $partner->id,
-////            'registered_params' => json_encode($registeredParams)
-//        ]);
+        $usersData = [
+//            'id' => $partner->id,
+            'first_name' => $request->getName(),
+            'last_name' => $request->getName(),
+            'email' => $request->getEmail(),
+            'password' => $passwordHash,
+            'account_id' => 10,
+//            'source_id' => $sorce->id,
+//            'partner_id' => $partner->id,
+//            'telegram' => $partner->id,
+//            'registered_params' => json_encode($registeredParams)
+        ];
 
-
+        $user = DB::connection('mysql')->table('users')->insert($usersData);
+dd($user);
         $unique_value = substr(Str::uuid()->toString(), 0, 4);
 
         $check_unique_value = DB::connection('partner_manager')->table('sources')->where('name', $unique_value)->exists();
@@ -79,7 +80,7 @@ class RegistrationController extends Controller
 
         $partner = DB::connection('partner_manager')->table('partners')->insert($partnerData);
         $newPartner = (object)$partnerData;
-        dd($partner);
+
   if ($partner){
 
       $sourceData = [
