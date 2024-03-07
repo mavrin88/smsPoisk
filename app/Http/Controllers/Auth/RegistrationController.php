@@ -38,7 +38,7 @@ class RegistrationController extends Controller
 
         $user = User::create([
 //            'id' => $partner->id,
-            'name' => $request->getName(),
+            'first_name' => $request->getName(),
             'email' => $request->getEmail(),
             'password' => $passwordHash,
 //            'source_id' => $source->id,
