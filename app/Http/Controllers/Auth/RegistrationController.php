@@ -53,7 +53,7 @@ class RegistrationController extends Controller
         $unique_value = substr(Str::uuid()->toString(), 0, 4);
 
         $check_unique_value = DB::connection('partner_manager')->table('sources')->where('name', $unique_value)->exists();
-        dd($check_unique_value);
+
 
         if ($check_unique_value){
             $unique_value = substr(Str::uuid()->toString(), 0, 4);
@@ -61,7 +61,7 @@ class RegistrationController extends Controller
 
         $latestRecord = DB::connection('partner_manager')->table('partners')->latest('id')->first('id');
         $newId = $latestRecord->id + 1;
-
+        dd($latestRecord);
         $registeredParams = [
             'tg' => $request->getTelegramm(),
             'sources' => $request->getSourceName(),
