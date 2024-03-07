@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Models\Partner;
+use App\Models\Source;
 use App\Models\User;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -10,26 +13,28 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Users/Index', [
-            'filters' => Request::all('search', 'role', 'trashed'),
-            'users' => Auth::user()->account->users()
-                ->orderByName()
-                ->filter(Request::only('search', 'role', 'trashed'))
-                ->get()
-                ->transform(fn ($user) => [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'owner' => $user->owner,
-                    'photo' => $user->photo_path ? URL::route('image', ['path' => $user->photo_path, 'w' => 40, 'h' => 40, 'fit' => 'crop']) : null,
-                    'deleted_at' => $user->deleted_at,
-                ]),
-        ]);
+        return Inertia::render('Auth/Register');
+//        return Inertia::render('Users/Index', [
+//            'filters' => Request::all('search', 'role', 'trashed'),
+//            'users' => Auth::user()->account->users()
+//                ->orderByName()
+//                ->filter(Request::only('search', 'role', 'trashed'))
+//                ->get()
+//                ->transform(fn ($user) => [
+//                    'id' => $user->id,
+//                    'name' => $user->name,
+//                    'email' => $user->email,
+//                    'owner' => $user->owner,
+//                    'photo' => $user->photo_path ? URL::route('image', ['path' => $user->photo_path, 'w' => 40, 'h' => 40, 'fit' => 'crop']) : null,
+//                    'deleted_at' => $user->deleted_at,
+//                ]),
+//        ]);
     }
 
     public function create()
@@ -37,27 +42,42 @@ class UsersController extends Controller
         return Inertia::render('Users/Create');
     }
 
-    public function store()
+    public function store(RegisterRequest $request)
     {
-        Request::validate([
-            'first_name' => ['required', 'max:50'],
-            'last_name' => ['required', 'max:50'],
-            'email' => ['required', 'max:50', 'email', Rule::unique('users')],
-            'password' => ['nullable'],
-            'owner' => ['required', 'boolean'],
-            'photo' => ['nullable', 'image'],
+        $passwordHash = Hash::make($request->getPassword());
+        $latestRecord = Partner::latest('id')->first('id');
+        $newId = $latestRecord->id + 1;
+
+
+        $user = User::create([
+            'name' => $request->getName(),
+            'email' => $request->getEmail(),
+            'password' => $passwordHash,
+            'source_id' => null,
+            'partner_id' => null,
+            'telegram' => null,
+//            'registered_params' => json_encode($registeredParams)
         ]);
 
-        Auth::user()->account->users()->create([
-            'first_name' => Request::get('first_name'),
-            'last_name' => Request::get('last_name'),
-            'email' => Request::get('email'),
-            'password' => Request::get('password'),
-            'owner' => Request::get('owner'),
-            'photo_path' => Request::file('photo') ? Request::file('photo')->store('users') : null,
+        $partner = Partner::create([
+            'id' => $newId,
+            'name' => $request->getName(),
+            'email' => $request->getEmail(),
+            'password' => $passwordHash,
         ]);
 
-        return Redirect::route('users')->with('success', 'User created.');
+        $source = Source::create([
+            'id' => $partner->id,
+            'name' => substr(Str::uuid()->toString(), 0, 8),
+            'partner_id' => $partner->id,
+            'offer_id' => 6 // временное
+        ]);
+
+        $test = User::find($user->id);
+        $test->update([
+            'partner_id' => $partner->id
+        ]);
+
     }
 
     public function edit(User $user)
