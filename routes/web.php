@@ -24,13 +24,10 @@ Route::post('login', [AuthenticatedSessionController::class, 'store'])
     ->name('login.store')
     ->middleware('guest');
 
-//Route::post('register', [RegistrationController::class, 'store'])
-//    ->name('register.store');
-Route::post('register', [UsersController::class, 'store'])
+Route::post('register', [RegistrationController::class, 'store'])
     ->name('register.store');
 
-//Route::get('registration', [RegistrationController::class, 'index'])->name('registration.index');
-Route::get('registration', [UsersController::class, 'index'])->name('registration.index');
+Route::get('registration', [RegistrationController::class, 'index'])->name('registration.index');
 
 Route::delete('logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
