@@ -41,7 +41,7 @@ class RegistrationController extends Controller
             'first_name' => $request->getName(),
             'email' => $request->getEmail(),
             'password' => $passwordHash,
-            'account_id' => null,
+            'account_id' => 10,
 //            'source_id' => $source->id,
 //            'partner_id' => $partner->id,
 //            'telegram' => $partner->id,
