@@ -77,7 +77,7 @@ class RegistrationController extends Controller
             'created_at' => now(),
         ];
 
-        $partner = DB::connection('readonly')->table('partners')->insert($partnerData);
+        $partner = DB::connection('partner_manager')->table('partners')->insert($partnerData);
         $newPartner = (object)$partnerData;
 dd($partner);
   if ($partner){
