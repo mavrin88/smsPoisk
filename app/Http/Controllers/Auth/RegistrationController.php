@@ -79,7 +79,7 @@ class RegistrationController extends Controller
 
         $partner = DB::connection('partner_manager')->table('partners')->insert($partnerData);
         $newPartner = (object)$partnerData;
-dd($partner);
+dd($latestRecord);
   if ($partner){
 
       $sourceData = [
