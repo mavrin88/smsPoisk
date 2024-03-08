@@ -50,7 +50,7 @@
 
       <footer>
         <div class="footer-links">
-          <a href="/Conditions_proportions">Условия и положения</a>
+          <a href="/Conditions_proportions.html">Условия и положения</a>
           <a href="/Privacy_policy.html">Политика конфиденциальности</a>
         </div>
       </footer>
