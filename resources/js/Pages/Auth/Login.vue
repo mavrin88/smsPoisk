@@ -16,7 +16,15 @@
 
         </div>
         <div class="flex px-10 py-4 bg-gray-100 border-t border-gray-100">
- <button class="text-lg approximation" @click.prevent="onRegister">Перейти к регистрации</button>
+          <div v-show="isHovered" class="mt-3.5">
+            <hollow-dots-spinner
+              :animation-duration="1000"
+              :dot-size="11"
+              :dots-num="1"
+              color="#ff1d5e"
+            />
+          </div>
+          <button @mouseover="showHoverElement" @mouseleave="hideHoverElement" class="text-lg approximation ml-1" @click.prevent="onRegister">Перейти к регистрации</button>
 
           <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="button" @click.prevent="login" >Войти</loading-button>
         </div>
@@ -30,6 +38,7 @@
 import { Head } from '@inertiajs/inertia-vue3'
 import TextInput from '@/Shared/TextInput'
 import LoadingButton from '@/Shared/LoadingButton'
+import { HollowDotsSpinner } from 'epic-spinners'
 import {route} from "ziggy-js";
 
 export default {
@@ -37,6 +46,7 @@ export default {
     Head,
     LoadingButton,
     TextInput,
+    HollowDotsSpinner
   },
   data() {
     return {
@@ -45,6 +55,7 @@ export default {
         password: '',
         remember: false,
       }),
+      isHovered: false,
     }
   },
   methods: {
@@ -53,6 +64,12 @@ export default {
     },
     onRegister() {
       this.$inertia.visit(route('registration.index'));
+    },
+    showHoverElement() {
+      this.isHovered = true;
+    },
+    hideHoverElement() {
+      this.isHovered = false;
     },
   },
 }
