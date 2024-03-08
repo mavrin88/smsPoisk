@@ -102,7 +102,7 @@ export default {
         name: '',
         telegramm: '',
         source_name: '',
-        about_us: '',
+        from: '',
         rememberTerms: false,
         rememberConsent: false,
       }),
