@@ -22,10 +22,6 @@
             </div>
           </div>
 
-          <text-input v-model="form.podpis" :error="form.errors.podpis" class="mt-6" label="Подпись требований к паролю"
-                      type="text"/>
-
-
           <div class="flex flex-wrap -mx-4">
             <div class="w-full md:w-1/2 px-4">
               <text-input v-model="form.name" :error="form.errors.name" class="mt-6" label="Как вас зовут?"
@@ -39,7 +35,7 @@
 
           <text-input v-model="form.source_name" :error="form.errors.source_name" class="mt-6"
                       label="С какими источниками работаете?" type="text"/>
-          <text-input v-model="form.about_us" :error="form.errors.about_us" class="mt-6" label="Как узнали о нас?"
+          <text-input v-model="form.from" :error="form.errors.about_us" class="mt-6" label="Как узнали о нас?"
                       type="text"/>
 
           <label class="flex items-center mt-6 select-none" for="form.rememberTerms">
@@ -73,7 +69,7 @@
 
       <footer>
         <div class="footer-links">
-          <a href="/Conditions_proportions">Условия и положения</a>
+          <a href="/Conditions_proportions.html">Условия и положения</a>
           <a href="/Privacy_policy.html">Политика конфиденциальности</a>
         </div>
       </footer>
