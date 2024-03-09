@@ -66,7 +66,7 @@ return [
         'readonly' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
-            'host' => env('READONLY_HOST', '127.0.0.1'),
+            'host' => env('READONLY_DB_HOST', '127.0.0.1'),
             'port' => env('READONLY_DB_PORT', '5432'),
             'database' => env('READONLY_DB_DATABASE', 'forge'),
             'username' => env('READONLY_DB_USERNAME', 'forge'),
