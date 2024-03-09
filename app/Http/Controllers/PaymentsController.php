@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\PaymentResource;
-use App\Http\Resources\PaymentsResource;
-use App\Models\Payment_to_partner;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Validation\Rule;
+
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
+use App\Http\Resources\PaymentsResource;
 
 class PaymentsController extends Controller
 {
@@ -19,7 +14,8 @@ class PaymentsController extends Controller
         $user = \auth()->user();
         $payment = DB::connection('readonly')->table('payment_to_partners')->where('partner_id', $user->id)->get();
 
-        return Inertia::render('Payments/Index', ['payments' =>  PaymentsResource::collection($payment)]);
+//        return Inertia::render('Payments/Index', ['payments' =>  PaymentsResource::collection($payment)]);
+        return Inertia::render('Payments/Index', ['payments' =>  '']);
 
     }
 

@@ -41,12 +41,11 @@ class RegistrationController extends Controller
             'last_name' => $request->getName(),
             'email' => $request->getEmail(),
             'password' => $passwordHash,
-            'account_id' => '',
+            'account_id' => rand(1, 100),
             'created_at' => now(),
             'updated_at' => now(),
 //            'source_id' => $sorce->id,
 //            'partner_id' => $partner->id,
-//            'telegram' => $partner->id,
 //            'registered_params' => json_encode($registeredParams)
         ];
 

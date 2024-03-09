@@ -209,29 +209,28 @@
         <th class="pb-4 pt-6 px-6 border-r-2 text-center">Сумма</th>
       </tr>
 
-      <tr v-for="items in tableScribers.data" :key="items.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
-        <td class="w-px border-t p-2.5 border-r-2 text-center">
-          {{ items.day }}
-        </td>
+<!--      <tr v-for="items in tableScribers.data" :key="items.id" class="hover:bg-gray-100 focus-within:bg-gray-100">-->
+<!--        <td class="w-px border-t p-2.5 border-r-2 text-center">-->
+<!--          {{ items.day }}-->
+<!--        </td>-->
 
-        <td class="w-px border-t p-2.5 border-r-2 text-center">
-          {{ items.registered }}
-        </td>
+<!--        <td class="w-px border-t p-2.5 border-r-2 text-center">-->
+<!--          {{ items.registered }}-->
+<!--        </td>-->
 
-        <td class="w-px border-t p-2.5 border-r-2 text-center">
-          {{ items.subscribed }}
-        </td>
+<!--        <td class="w-px border-t p-2.5 border-r-2 text-center">-->
+<!--          {{ items.subscribed }}-->
+<!--        </td>-->
 
-        <td class="w-px border-t p-2.5 border-r-2 text-center">
-<!--          {{ items.cr }}-->
-          0
-        </td>
+<!--        <td class="w-px border-t p-2.5 border-r-2 text-center">-->
+<!--&lt;!&ndash;          {{ items.cr }}&ndash;&gt;-->
+<!--          0-->
+<!--        </td>-->
 
-        <td class="w-px border-t p-2.5 border-r-2 text-center">
-          {{ items.total_income }}
-        </td>
-
-      </tr>
+<!--        <td class="w-px border-t p-2.5 border-r-2 text-center">-->
+<!--          {{ items.total_income }}-->
+<!--        </td>-->
+<!--      </tr>-->
 
     </table>
   </div>
