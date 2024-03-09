@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\DateFilterResource;
-use App\Models\Payment_log;
-use App\Models\User;
+use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Inertia\Inertia;
 
 class DashboardController extends Controller
 {
@@ -15,9 +12,8 @@ class DashboardController extends Controller
     {
 
         $authUser = \auth()->user();
-//        $user = DB::connection('readonly')->table('payment_to_partners')->get();
-//        $user = User::with('source')->where('id', $authUser->id)->first();
-//dd($user);
+        $source_name = DB::connection('manager')->table('sources')->where('id', $authUser->id)->first();
+
 
 //------------------------------- + Виджет текущего баланса за весь период: -----------------------------------
 
@@ -372,7 +368,7 @@ class DashboardController extends Controller
 
 //        return Inertia::render('Dashboard/Index', ['source_name' => $user->source->name, 'widget_total_income' => $totalIncome, 'widget_available_balances'=> $available_balances, 'widget_period_subscribed' => $all_subscriptions, 'widget_active_subscribed' => $acive_subscriptions, 'tableScribers' => DateFilterResource::collection($tableScribers), 'isLoading' => false]);
 
-        return Inertia::render('Dashboard/Index', ['source_name' => 'dfdgg', 'widget_total_income' => 21, 'widget_available_balances'=> 21, 'widget_period_subscribed' => 21, 'widget_active_subscribed' => 21]);
+        return Inertia::render('Dashboard/Index', ['source_name' => $source_name->name, 'widget_total_income' => 21, 'widget_available_balances'=> 21, 'widget_period_subscribed' => 21, 'widget_active_subscribed' => 21]);
 
     }
 }
