@@ -36,73 +36,86 @@ class RegistrationController extends Controller
     {
         $passwordHash = Hash::make($request->getPassword());
 
-//        $usersData = [
-////            'id' => $partner->id,
-//            'first_name' => $request->getName(),
-//            'last_name' => $request->getName(),
-//            'email' => $request->getEmail(),
-//            'password' => $passwordHash,
-//            'account_id' => 10,
-////            'source_id' => $sorce->id,
-////            'partner_id' => $partner->id,
-////            'telegram' => $partner->id,
-////            'registered_params' => json_encode($registeredParams)
-//        ];
+        $usersData = [
+            'first_name' => $request->getName(),
+            'last_name' => $request->getName(),
+            'email' => $request->getEmail(),
+            'password' => $passwordHash,
+            'account_id' => '',
+            'created_at' => now(),
+            'updated_at' => now(),
+//            'source_id' => $sorce->id,
+//            'partner_id' => $partner->id,
+//            'telegram' => $partner->id,
+//            'registered_params' => json_encode($registeredParams)
+        ];
 
-//        $user = DB::connection('mysql')->table('users')->insert($usersData);
-//dd($user);
+        $user = DB::connection('mysql')->table('users')->insert($usersData);
+
+//-------------- Partners
+        if ($user) {
+
+            $registeredParams = [
+                'tg' => $request->getTelegramm(),
+                'sources' => $request->getSourceName(),
+                'from' => $request->getFrom(),
+            ];
+
+            $partnerData = [
+                'name' => $request->getName(),
+                'email' => $request->getEmail(),
+                'password' => $passwordHash,
+                'registered_params' => json_encode($registeredParams),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+
+            $partner = DB::connection('manager')->table('partners')->insertGetId($partnerData);
+        }
+
+//-------------- Sources
         $unique_value = substr(Str::uuid()->toString(), 0, 4);
 
-        $check_unique_value = DB::connection('partner_manager')->table('sources')->where('name', $unique_value)->exists();
+        $check_unique_value = DB::connection('manager')->table('sources')->where('name', $unique_value)->exists();
 
-        if ($check_unique_value){
+        if ($check_unique_value) {
             $unique_value = substr(Str::uuid()->toString(), 0, 4);
         }
 
-        $latestRecord = DB::connection('partner_manager')->table('partners')->latest('id')->first('id');
-        $newId = $latestRecord->id + 1;
+        if ($partner) {
 
-        $registeredParams = [
-            'tg' => $request->getTelegramm(),
-            'sources' => $request->getSourceName(),
-            'from' => $request->getFrom(),
-        ];
+            $sourceData = [
+                'name' => $unique_value,
+                'partner_id' => $partner,
+                'is_cloaking' => true,
+                'offer_id' => 6,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
 
-        $partnerData = [
-            'id' => $newId,
-            'name' => $request->getName(),
-            'email' => $request->getEmail(),
-            'password' => $passwordHash,
-            'registered_params' => json_encode($registeredParams),
-            'created_at' => now(),
-        ];
+            $source = DB::connection('manager')->table('sources')->insert($sourceData);
+            $Source = (object)$sourceData;
+            $registeredParams = ['source' => $Source->name];
 
-        $partner = DB::connection('partner_manager')->table('partners')->insert($partnerData);
-        $newPartner = (object)$partnerData;
+        }
 
-  if ($partner){
+        if ($source) {
 
-      $sourceData = [
-//          'id' => $newPartner->id,
-          'name' => $unique_value,
-          'partner_id' => $newPartner->id,
-          'is_cloaking' => true,
-          'offer_id' => 6,
-          'created_at' => now(),
-      ];
-
-      $source = DB::connection('partner_manager')->table('sources')->insert($sourceData);
-      $newSource = (object)$sourceData;
-      $registeredParams = ['source' => $newSource->name];
-
-  }
-
-//if ($source){
-//
+//    $usersData = [
+//        'first_name' => $request->getName(),
+//        'last_name' => $request->getName(),
+//        'email' => $request->getEmail(),
+//        'password' => $passwordHash,
+//        'account_id' => 10,
+//            'source_id' => $Source->id,
+//            'partner_id' => $partner,
+//            'telegram' => $request->getTelegramm(),
+//            'registered_params' => json_encode($registeredParams)
+//    ];
 //    $userFind = User::find($user->id);
 //    $userFind->update(['partner_id' => $partner->id,]);
-//
-//}
+
+        }
 
 //временное для уточнения
 //        if ($source){
@@ -138,5 +151,6 @@ class RegistrationController extends Controller
     }
 
 }
+
 
 
