@@ -17,8 +17,7 @@ class PaymentsController extends Controller
     public function index()
     {
         $user = \auth()->user();
-    
-        $payment = Payment_to_partner::where('partner_id', $user->id)->get();
+        $payment = DB::connection('readonly')->table('payment_to_partners')->where('partner_id', $user->id)->get();
 
         return Inertia::render('Payments/Index', ['payments' =>  PaymentsResource::collection($payment)]);
 
