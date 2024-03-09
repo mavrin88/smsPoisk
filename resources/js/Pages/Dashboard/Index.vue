@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Head title="Главная"/>
+    <Head title="Главная" />
     <h1 class="mb-8 text-3xl font-bold">Главная
     </h1>
   </div>
@@ -39,7 +39,7 @@
         значение нельзя
         менять! Для дополнительной атрибуции
         трафика Вы можете использовать параметры URL: s1, s2, s3, s4, s5. Т.о. Трекинг ссылка будет вида:<span
-            class="text-black leading-relaxed hover:underline link-hover"> https://smspoisk.ru/land2/?source={{
+          class="text-black leading-relaxed hover:underline link-hover"> https://smspoisk.ru/land2/?source={{
             source_name
           }}&s1=dzen&s2=article1</span>
       </h6>
@@ -165,11 +165,11 @@
 
   <div class="flex-container flex space-x-4">
     <div class="relative z-0 w-1/5 mb-6 group">
-      <DateInput v-model:value="form.dateFrom" title="Дата с" type="date"/>
+      <DateInput v-model:value="form.dateFrom" title="Дата с" type="date" />
     </div>
 
     <div class="relative z-0 w-1/5 mb-6 group">
-      <DateInput v-model:value="form.dateTo" title="Дата по" type="date"/>
+      <DateInput v-model:value="form.dateTo" title="Дата по" type="date" />
     </div>
 
     <div class="flex items-center">
@@ -188,15 +188,14 @@
     <div class="relative ">
       <template v-if="searchOn" class="pb-1 pl-1">
         <hollow-dots-spinner
-            :animation-duration="2000"
-            :dot-size="12"
-            :dots-num="3"
-            color="#ff1d5e"
+          :animation-duration="2000"
+          :dot-size="12"
+          :dots-num="3"
+          color="#ff1d5e"
         />
       </template>
     </div>
   </div>
-
 
 
   <div class="bg-white rounded-md shadow-xl overflow-x-auto mt-4">
@@ -209,28 +208,28 @@
         <th class="pb-4 pt-6 px-6 border-r-2 text-center">Сумма</th>
       </tr>
 
-<!--      <tr v-for="items in tableScribers.data" :key="items.id" class="hover:bg-gray-100 focus-within:bg-gray-100">-->
-<!--        <td class="w-px border-t p-2.5 border-r-2 text-center">-->
-<!--          {{ items.day }}-->
-<!--        </td>-->
+      <tr v-for="items in tableScribers.data" :key="items.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
+        <td class="w-px border-t p-2.5 border-r-2 text-center">
+          {{ items.day }}
+        </td>
 
-<!--        <td class="w-px border-t p-2.5 border-r-2 text-center">-->
-<!--          {{ items.registered }}-->
-<!--        </td>-->
+        <td class="w-px border-t p-2.5 border-r-2 text-center">
+          {{ items.registered }}
+        </td>
 
-<!--        <td class="w-px border-t p-2.5 border-r-2 text-center">-->
-<!--          {{ items.subscribed }}-->
-<!--        </td>-->
+        <td class="w-px border-t p-2.5 border-r-2 text-center">
+          {{ items.subscribed }}
+        </td>
 
-<!--        <td class="w-px border-t p-2.5 border-r-2 text-center">-->
-<!--&lt;!&ndash;          {{ items.cr }}&ndash;&gt;-->
-<!--          0-->
-<!--        </td>-->
+        <td class="w-px border-t p-2.5 border-r-2 text-center">
+          <!--          {{ items.cr }}-->
+          0
+        </td>
 
-<!--        <td class="w-px border-t p-2.5 border-r-2 text-center">-->
-<!--          {{ items.total_income }}-->
-<!--        </td>-->
-<!--      </tr>-->
+        <td class="w-px border-t p-2.5 border-r-2 text-center">
+          {{ items.total_income }}
+        </td>
+      </tr>
 
     </table>
   </div>
@@ -238,17 +237,17 @@
 </template>
 
 <script>
-import {Head} from '@inertiajs/inertia-vue3'
+import { Head } from '@inertiajs/inertia-vue3'
 import Layout from '@/Shared/Layout'
 import DateInput from '@/Shared/DateInput.vue'
-import throttle from "lodash/throttle";
-import pickBy from "lodash/pickBy";
-import mapValues from "lodash/mapValues";
-import {HollowDotsSpinner} from 'epic-spinners'
+import throttle from 'lodash/throttle'
+import pickBy from 'lodash/pickBy'
+import mapValues from 'lodash/mapValues'
+import { HollowDotsSpinner } from 'epic-spinners'
 
 export default {
   components: {
-    Head, DateInput, HollowDotsSpinner
+    Head, DateInput, HollowDotsSpinner,
   },
   layout: Layout,
 
@@ -260,10 +259,10 @@ export default {
     widget_active_subscribed: Number,
     filters: Object,
     tableScribers: Array,
-    isLoading: Boolean
+    isLoading: Boolean,
   },
 
-  data: function () {
+  data: function() {
     return {
       form: {
         dateFrom: null,
@@ -277,20 +276,20 @@ export default {
   },
   computed: {
     Lend_1() {
-      return `https://smspoisk.ru/source=${this.source_name}`;
+      return `https://smspoisk.ru/source=${this.source_name}`
     },
     Lend_2() {
-      return `https://smspoisk.ru/land2/source=${this.source_name}`;
+      return `https://smspoisk.ru/land2/source=${this.source_name}`
     },
     hasFilters() {
-      return Object.values(this.form).some(value => value !== "" && value !== undefined);
+      return Object.values(this.form).some(value => value !== '' && value !== undefined)
     },
   },
   methods: {
-    clearFilters: function () {
+    clearFilters: function() {
       Object.keys(this.form).forEach(key => {
-        this.form[key] = "";
-      });
+        this.form[key] = ''
+      })
     },
 
     reset() {
@@ -301,11 +300,15 @@ export default {
     form: {
       deep: true,
       onFinish: true,
-      handler: throttle(function () {
+      handler: throttle(function() {
         this.$inertia.get('/', pickBy(this.form), {
-          onBefore: () => { this.searchOn = true },
-          onSuccess: ( ) => { this.searchOn = false },
-          preserveState: true
+          onBefore: () => {
+            this.searchOn = true
+          },
+          onSuccess: () => {
+            this.searchOn = false
+          },
+          preserveState: true,
         })
       }, 150),
     },

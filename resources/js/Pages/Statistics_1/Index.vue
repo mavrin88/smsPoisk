@@ -16,40 +16,40 @@
         <th class="pb-4 pt-6 px-6 border-r-2 text-center">s4</th>
         <th class="pb-4 pt-6 px-6 border-r-2 text-center">s5</th>
       </tr>
-<!--      <tr v-for="conversion in tableConversion.data" :key="conversion.id" class="hover:bg-gray-100 focus-within:bg-gray-100">-->
-<!--        <td class="w-px border-t p-2.5 border-r-2 text-center">-->
-<!--          {{ conversion.day }}-->
-<!--        </td>-->
+      <tr v-for="conversion in tableConversion.data" :key="conversion.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
+        <td class="w-px border-t p-2.5 border-r-2 text-center">
+          {{ conversion.day }}
+        </td>
 
-<!--        <td class="w-px border-t p-2.5 border-r-2 text-center">-->
-<!--          {{ conversion.payment_type }}-->
-<!--        </td>-->
+        <td class="w-px border-t p-2.5 border-r-2 text-center">
+          {{ conversion.payment_type }}
+        </td>
 
-<!--        <td class="w-px border-t p-2.5 border-r-2 text-center">-->
-<!--          {{ conversion.income }}-->
-<!--        </td>-->
+        <td class="w-px border-t p-2.5 border-r-2 text-center">
+          {{ conversion.income }}
+        </td>
 
-<!--        <td class="w-px border-t p-2.5 border-r-2 text-center">-->
-<!--          {{ conversion.s1 }}-->
-<!--        </td>-->
+        <td class="w-px border-t p-2.5 border-r-2 text-center">
+          {{ conversion.s1 }}
+        </td>
 
-<!--        <td class="w-px border-t p-2.5 border-r-2 text-center">-->
-<!--          {{ conversion.s2 }}-->
-<!--        </td>-->
+        <td class="w-px border-t p-2.5 border-r-2 text-center">
+          {{ conversion.s2 }}
+        </td>
 
-<!--        <td class="w-px border-t p-2.5 border-r-2 text-center">-->
-<!--          {{ conversion.s3 }}-->
-<!--        </td>-->
+        <td class="w-px border-t p-2.5 border-r-2 text-center">
+          {{ conversion.s3 }}
+        </td>
 
-<!--        <td class="w-px border-t p-2.5 border-r-2 text-center">-->
-<!--          {{ conversion.s4 }}-->
-<!--        </td>-->
+        <td class="w-px border-t p-2.5 border-r-2 text-center">
+          {{ conversion.s4 }}
+        </td>
 
-<!--        <td class="w-px border-t p-2.5 border-r-2 text-center">-->
-<!--          {{ conversion.s5 }}-->
-<!--        </td>-->
+        <td class="w-px border-t p-2.5 border-r-2 text-center">
+          {{ conversion.s5 }}
+        </td>
 
-<!--      </tr>-->
+      </tr>
 
     </table>
   </div>
