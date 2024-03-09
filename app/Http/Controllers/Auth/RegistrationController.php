@@ -35,8 +35,11 @@ class RegistrationController extends Controller
     public function store(RegisterRequest $request)
     {
         $passwordHash = Hash::make($request->getPassword());
+        $latestSourceID = DB::connection('manager')->table('sources')->latest('id')->first('id');
 
+//-------------- Users
         $usersData = [
+            'id' => $latestSourceID + 1,
             'first_name' => $request->getName(),
             'last_name' => $request->getName(),
             'email' => $request->getEmail(),
