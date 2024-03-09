@@ -39,7 +39,7 @@ class RegistrationController extends Controller
 
 //-------------- Users
         $usersData = [
-            'id' => $latestSourceID + 1,
+            'id' => $latestSourceID->id + 1,
             'first_name' => $request->getName(),
             'last_name' => $request->getName(),
             'email' => $request->getEmail(),
