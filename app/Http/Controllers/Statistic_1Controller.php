@@ -57,7 +57,7 @@ class Statistic_1Controller extends Controller
 
 
 //        return Inertia::render('Statistics_1/Index', ['tableConversion' => ConversionResource::collection('$tableConversion')]);
-        return Inertia::render('Statistics_1/Index', ['tableConversion' => ConversionResource::collection('')]);
+        return Inertia::render('Statistics_1/Index', ['tableConversion' => '']);
     }
 
 }
