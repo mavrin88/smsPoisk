@@ -18,7 +18,7 @@
     <div class="flex items-center px-4 py-3 bg-gray-50 border-t border-gray-100 shadow mb-8 ">
       <div class="button-container">
         <h6 class="text-uppercase text-muted leading-relaxed">Трекинг ссылка Лэнд 1:</h6>
-        <a :href="Lend_1" target="_blank">https://smspoisk.ru/?source={{ source_name }}
+        <a :href="getEncodedLend_1()" target="_blank">https://smspoisk.ru/?source={{ source_name }}
         </a>
       </div>
     </div>
@@ -26,7 +26,7 @@
     <div class="flex items-center px-4 py-3 bg-gray-50 border-t border-gray-100 shadow mb-8 ">
       <div class="button-container">
         <h6 class="text-uppercase text-muted leading-relaxed">Трекинг ссылка Лэнд 2:</h6>
-        <a :href="Lend_2" target="_blank"> https://smspoisk.ru/land2/?source={{ source_name }}</a>
+        <a :href="getEncodedLend_2()" target="_blank"> https://smspoisk.ru/land2/?source={{ source_name }}</a>
       </div>
     </div>
 
@@ -291,10 +291,17 @@ export default {
         this.form[key] = ''
       })
     },
-
     reset() {
       this.form = mapValues(this.form, () => '')
     },
+    getEncodedLend_1() {
+      const encodedSource = encodeURIComponent(this.source_name);
+      return `https://smspoisk.ru/?source=${encodedSource}`;
+    },
+    getEncodedLend_2() {
+      const encodedSource = encodeURIComponent(this.source_name);
+      return `https://smspoisk.ru/land2/?source=${encodedSource}`;
+    }
   },
   watch: {
     form: {
