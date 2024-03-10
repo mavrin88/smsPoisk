@@ -22,7 +22,7 @@
         </td>
 
         <td class="w-px border-t p-2.5 border-r-2 text-center">
-          {{ conversion.payment_type }}
+          {{ conversion.pt }}
         </td>
 
         <td class="w-px border-t p-2.5 border-r-2 text-center">
@@ -66,7 +66,7 @@ export default {
   },
   layout: Layout,
   props: {
-    tableConversion: Object
+    tableConversion: Array
   }
 }
 </script>

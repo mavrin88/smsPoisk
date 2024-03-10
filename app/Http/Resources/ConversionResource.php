@@ -17,15 +17,14 @@ class ConversionResource extends JsonResource
     {
 
         return [
+            "day" => Carbon::create($this->day)->format('d-m-Y'),
             "income" => $this->income,
-            "payment_type" => $this->payment_type,
+            "pt" => $this->pt,
             "s1" => $this->s1,
             "s2" => $this->s2,
             "s3" => $this->s3,
             "s4" => $this->s4,
             "s5" => $this->s5,
-            "day" => Carbon::create($this->day)->format('d-m-Y'),
-
         ];
     }
 }
