@@ -12,10 +12,13 @@ class PaymentsController extends Controller
     public function index()
     {
         $user = \auth()->user();
-        $payment = DB::connection('readonly')->table('payment_to_partners')->where('partner_id', $user->id)->get();
+        $payment = DB::connection('readonly')
+            ->table('payment_to_partners')
+            ->where('partner_id', $user->id)
+            ->orderByDesc('created_at')
+            ->get();
 
-//        return Inertia::render('Payments/Index', ['payments' =>  PaymentsResource::collection($payment)]);
-        return Inertia::render('Payments/Index', ['payments' =>  '']);
+        return Inertia::render('Payments/Index', ['payments' =>  PaymentsResource::collection($payment)]);
 
     }
 
