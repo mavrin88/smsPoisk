@@ -222,8 +222,7 @@
         </td>
 
         <td class="w-px border-t p-2.5 border-r-2 text-center">
-          <!--          {{ items.cr }}-->
-          0
+          {{ items.cr }}
         </td>
 
         <td class="w-px border-t p-2.5 border-r-2 text-center">

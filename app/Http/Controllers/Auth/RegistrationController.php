@@ -2,23 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Requests\Auth\RegisterRequest;
-use App\Models\Contact;
-use App\Models\Partner;
-use App\Models\Payment_log;
-use App\Models\Payment_to_partner;
-use App\Models\Source;
-use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Inertia\Inertia;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\RegisterRequest;
 
 class RegistrationController extends Controller
 {
