@@ -47,12 +47,9 @@ class RegistrationController extends Controller
             'account_id' => rand(1, 100),
             'created_at' => now(),
             'updated_at' => now(),
-//            'source_id' => $sorce->id,
-//            'partner_id' => $partner->id,
-//            'registered_params' => json_encode($registeredParams)
         ];
 
-        $user = DB::connection('mysql')->table('users')->insert($usersData);
+        $user = DB::connection('mysql')->table('users')->insertGetId($usersData);
 
 //-------------- Partners
         if ($user) {
@@ -103,51 +100,11 @@ class RegistrationController extends Controller
 
         if ($source) {
 
-//    $usersData = [
-//        'first_name' => $request->getName(),
-//        'last_name' => $request->getName(),
-//        'email' => $request->getEmail(),
-//        'password' => $passwordHash,
-//        'account_id' => 10,
-//            'source_id' => $Source->id,
-//            'partner_id' => $partner,
-//            'telegram' => $request->getTelegramm(),
-//            'registered_params' => json_encode($registeredParams)
-//    ];
-//    $userFind = User::find($user->id);
-//    $userFind->update(['partner_id' => $partner->id,]);
-
+            DB::connection('mysql')
+                ->table('users')
+                ->where('id', $user)
+                ->update(['partner_id' => $partner]);
         }
-
-//временное для уточнения
-//        if ($source){
-//
-//            $payment_logData = [
-//                'id' => $newUser->id,
-//                'user_id' => $newUser->id,
-//                'amount' => 30,
-//                'status' => true,
-//                'offer_id' => 6,
-//                'income' => 67,
-//                'payment_type' => 'subscription',
-//            ];
-//
-//            $payment_logs = DB::connection('partner_manager')->table('payment_logs')->insert($payment_logData);
-//
-//            if ($payment_logs){
-//
-//                $payment_to_partnerData = [
-//                    'id' => $newUser->id,
-//                    'partner_id' => $newUser->id,
-//                    'amount' => 30,
-//                    'currency' => 'RUB',
-//                    'type' => 'СБП',
-//                ];
-//                $payment_partner = DB::connection('partner_manager')->table('payment_to_partners')->insert($payment_to_partnerData);
-//            }
-//
-//        }
-
 
         return redirect('/login');
     }
