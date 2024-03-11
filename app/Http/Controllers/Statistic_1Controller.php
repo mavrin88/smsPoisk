@@ -17,7 +17,7 @@ class Statistic_1Controller extends Controller
                 DB::raw("CAST(u.registered_params as jsonb) ->> 'source' as src"),
                 'p.user_id as pid',
                 'p.income',
-                DB::raw("DATE(p.created_at) as day"),
+                DB::raw("p.created_at as day"),
                 'p.payment_type as pt',
                 DB::raw("CAST(u.registered_params as jsonb) ->> 's1' as s1"),
                 DB::raw("CAST(u.registered_params as jsonb) ->> 's2' as s2"),
