@@ -38,6 +38,8 @@ class CopyUserCommand extends Command
      */
     public function handle()
     {
+        DB::connection('mysql')->table('users')->truncate();
+
         $partners = DB::connection('manager')
             ->table('partners')
             ->get();
