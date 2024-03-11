@@ -45,7 +45,7 @@ class UpdateUserCommand extends Command
 
             foreach ($partners as $partner) {
 
-                dump($partner);
+//                dump($partner);
 
                 $userData = [
                     'first_name' => $partner->name,
