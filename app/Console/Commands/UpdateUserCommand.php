@@ -44,6 +44,9 @@ class UpdateUserCommand extends Command
                 ->get();
 
             foreach ($partners as $partner) {
+
+                dump($partner);
+
                 $userData = [
                     'first_name' => $partner->name,
                     'last_name' => $partner->name,
@@ -55,10 +58,12 @@ class UpdateUserCommand extends Command
                 ];
 
                 try {
-                    DB::connection('mysql')
+                    $user = DB::connection('mysql')
                         ->table('users')
                         ->where('partner_id', '=', $partner->id)
                         ->update($userData);
+
+                    dump($user);
                 } catch (\Exception $e) {
                     continue;
                 }
