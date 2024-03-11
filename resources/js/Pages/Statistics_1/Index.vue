@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Head title="Dashboard"/>
+    <Head title="Конверсии"/>
     <h1 class="mb-8 text-3xl font-bold">Конверсии</h1>
   </div>
 

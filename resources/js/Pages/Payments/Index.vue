@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Head title="Dashboard"/>
+    <Head title="Выплаты"/>
     <h1 class="mb-8 text-3xl font-bold">Условия выплат </h1>
   </div>
 
