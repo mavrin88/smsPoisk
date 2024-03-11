@@ -14,7 +14,7 @@ class PaymentsController extends Controller
         $user = \auth()->user();
         $payment = DB::connection('readonly')
             ->table('payment_to_partners')
-            ->where('partner_id', $user->id)
+            ->where('partner_id', $user->partner_id)
             ->orderByDesc('created_at')
             ->get();
 

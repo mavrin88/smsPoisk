@@ -181,22 +181,10 @@
   </div>
 
   <div class="flex-container flex space-x-4">
-    <div class="relative ">
-      <h1 class="ml-5 text-uppercase font-black">Статистика:</h1>
-    </div>
-
-    <div class="relative ">
-      <template v-if="searchOn" class="pb-1 pl-1">
-        <hollow-dots-spinner
-          :animation-duration="2000"
-          :dot-size="12"
-          :dots-num="3"
-          color="#ff1d5e"
-        />
-      </template>
+    <div class="relative  mr-1 group">
+      <h1 class="ml-5 text-uppercase font-black">Статистика: </h1>
     </div>
   </div>
-
 
   <div class="bg-white rounded-md shadow-xl overflow-x-auto mt-4">
     <table class="w-full whitespace-nowrap">
@@ -204,6 +192,7 @@
         <th class="pb-4 pt-6 px-6 border-r-2 text-center">Дата</th>
         <th class="pb-4 pt-6 px-6 border-r-2 text-center">Регистраций</th>
         <th class="pb-4 pt-6 px-6 border-r-2 text-center">Подписок</th>
+        <th class="pb-4 pt-6 px-6 border-r-2 text-center">CR</th>
         <th class="pb-4 pt-6 px-6 border-r-2 text-center">Конверсий</th>
         <th class="pb-4 pt-6 px-6 border-r-2 text-center">Сумма</th>
       </tr>
@@ -226,6 +215,10 @@
         </td>
 
         <td class="w-px border-t p-2.5 border-r-2 text-center">
+          {{ items.trx }}
+        </td>
+
+        <td class="w-px border-t p-2.5 border-r-2 text-center">
           {{ items.total_income }}
         </td>
       </tr>
@@ -241,12 +234,10 @@ import Layout from '@/Shared/Layout'
 import DateInput from '@/Shared/DateInput.vue'
 import throttle from 'lodash/throttle'
 import pickBy from 'lodash/pickBy'
-import mapValues from 'lodash/mapValues'
-import { HollowDotsSpinner } from 'epic-spinners'
 
 export default {
   components: {
-    Head, DateInput, HollowDotsSpinner,
+    Head, DateInput
   },
   layout: Layout,
 
@@ -281,17 +272,38 @@ export default {
       return `https://smspoisk.ru/land2/source=${this.source_name}`
     },
     hasFilters() {
-      return Object.values(this.form).some(value => value !== '' && value !== undefined)
+      // return Object.values(this.form).some(value => value !== '' && value !== undefined)
+      return true
     },
   },
   methods: {
     clearFilters: function() {
-      Object.keys(this.form).forEach(key => {
-        this.form[key] = ''
-      })
+      // Object.keys(this.form).forEach(key => {
+      //   this.form[key] = ''
+      // })
+
+    },
+    dataFrom() {
+      const currentDate = new Date();
+      const thirtyDaysAgo = new Date(currentDate);
+      thirtyDaysAgo.setDate(currentDate.getDate() - 30);
+
+      const yyyy = thirtyDaysAgo.getFullYear();
+      const mm = String(thirtyDaysAgo.getMonth() + 1).padStart(2, '0');
+      const dd = String(thirtyDaysAgo.getDate()).padStart(2, '0');
+      this.form.dateFrom = `${yyyy}-${mm}-${dd}`;
+    },
+    dataTo() {
+      const currentDate = new Date();
+      const yyyy = currentDate.getFullYear();
+      const mm = String(currentDate.getMonth() + 1).padStart(2, '0');
+      const dd = String(currentDate.getDate()).padStart(2, '0');
+      this.form.dateTo = `${yyyy}-${mm}-${dd}`;
     },
     reset() {
-      this.form = mapValues(this.form, () => '')
+      // this.form = mapValues(this.form, () => '')
+      this.dataFrom()
+      this.dataTo()
     },
     getEncodedLend_1() {
       const encodedSource = encodeURIComponent(this.source_name);

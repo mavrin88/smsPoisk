@@ -29,7 +29,7 @@ class Statistic_1Controller extends Controller
             ->join('sources as s', 's.name', '=', DB::raw("CAST(u.registered_params as jsonb) ->> 'source'"))
             ->join('partners as pp', 'pp.id', '=', 's.partner_id')
             ->where('p.status', true)
-            ->where('pp.id', $authUser->id);
+            ->where('pp.id', $authUser->partner_id);
 
         $subquery = $dataSubquery->toSql();
         $bindings = $dataSubquery->getBindings();

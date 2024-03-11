@@ -17,7 +17,8 @@ class ConversionResource extends JsonResource
     {
 
         return [
-            "day" => Carbon::create($this->day)->format('d-m-Y'),
+//            "day" => Carbon::create($this->day)->format('d-m-Y'),
+            "day" => $this->day,
             "income" => $this->income,
             "pt" => $this->pt,
             "s1" => $this->s1,
