@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\DateFilterResource;
+use Carbon\Carbon;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,12 +14,12 @@ class DashboardController extends Controller
     {
 
         $authUser = \auth()->user();
-        $source = DB::connection('manager')->table('sources')->where('id', $authUser->id)->first();
+        $source = DB::connection('manager')->table('sources')->where('partner_id', $authUser->partner_id)->first();
 
 
 //------------------------------- + Виджет текущего баланса за весь период: -----------------------------------
 
-        $totalIncome = DB::connection('readonly')->table('payment_logs as p')
+        $result = DB::connection('readonly')->table('payment_logs as p')
             ->select(DB::raw('SUM(p.income)/2 as total_income'))
             ->join('users as u', 'u.id', '=', 'p.user_id')
             ->join('sources as s', function ($join) {
@@ -26,11 +27,15 @@ class DashboardController extends Controller
             })
             ->join('partners as pp', 'pp.id', '=', 's.partner_id')
             ->where('p.status', true)
-            ->where('pp.id', $authUser->id)
+            ->where('pp.id', $authUser->partner_id)
             ->first()
             ->total_income;
 
-        if ($totalIncome === null) $totalIncome = 0;
+        if ($result === null) {
+            $totalIncome = 0;
+        } else {
+            $totalIncome = number_format($result, 2, '.', '');
+        }
 
 //------------------------------- + Виджет кол-ва подписчиков: -----------------------------------
 
@@ -63,7 +68,7 @@ class DashboardController extends Controller
             })
             ->leftJoin('payment_logs as p', 'u.id', '=', 'p.user_id')
             ->where('s.offer_id', 6)
-            ->where('pp.id', $authUser->id)
+            ->where('pp.id', $authUser->partner_id)
             ->whereNotNull('pp.name')
             ->where('p.status', true)
             ->where('p.payment_type', '=', 'subscription')
@@ -105,7 +110,7 @@ class DashboardController extends Controller
             ->join('partners as pp', 'pp.id', '=', 's.partner_id')
             ->join('payment_to_partners as ptp', 'pp.id', '=', 'ptp.partner_id')
             ->where('p.status', true)
-            ->where('pp.id', $authUser->id);
+            ->where('pp.id', $authUser->partner_id);
 
         $result = DB::connection('readonly')->table(DB::raw("({$dataSubquery->toSql()}) as d"))
             ->mergeBindings($dataSubquery)
@@ -135,7 +140,7 @@ class DashboardController extends Controller
             ->join('partners as pp', 'pp.id', '=', 's.partner_id')
             ->where('p.offer_id', 6)
             ->where('p.status', true)
-            ->where('pp.id', $authUser->partner_id) //17
+            ->where('pp.id', $authUser->partner_id)
             ->when($request->filled('dateFrom'), function ($query) use ($request) {
                 $query->whereDate('p.created_at', '>=', $request->input('dateFrom'));
             })
@@ -202,7 +207,7 @@ class DashboardController extends Controller
                 'd.day',
                 'rbs.cnt as registered',
                 'sbs.cnt as subscribed',
-                DB::raw('COALESCE(sbs.cnt * 100.0 / rbs.cnt, 0) AS cr'),
+                DB::raw('FLOOR(COALESCE(sbs.cnt * 100.0 / rbs.cnt, 0)) AS cr'),
                 DB::raw('COUNT(d.pid) as trx'),
                 DB::raw('SUM(d.income)/2 as total_income')
             )
@@ -211,8 +216,7 @@ class DashboardController extends Controller
             ->orderByDesc('total_income')
             ->get();
 
-
-        return Inertia::render('Dashboard/Index', ['source_name' => $source->name, 'widget_total_income' => $totalIncome, 'widget_available_balances'=> $available_balances, 'widget_period_subscribed' => $all_subscriptions, 'widget_active_subscribed' => $acive_subscriptions, 'tableScribers' => DateFilterResource::collection($tableScribers)]);
+        return Inertia::render('Dashboard/Index', ['source_name' => $source->name, 'widget_total_income' => $totalIncome, 'widget_available_balances' => $available_balances, 'widget_period_subscribed' => $all_subscriptions, 'widget_active_subscribed' => $acive_subscriptions, 'tableScribers' => DateFilterResource::collection($tableScribers)]);
 
     }
 }
