@@ -13,7 +13,7 @@ class DashboardController extends Controller
     {
 
         $authUser = \auth()->user();
-        $source = DB::connection('manager')->table('sources')->where('id', $authUser->id)->first();
+        $source = DB::connection('manager')->table('sources')->where('id', $authUser->partner_id)->first();
 
 
 //------------------------------- + Виджет текущего баланса за весь период: -----------------------------------
@@ -26,7 +26,7 @@ class DashboardController extends Controller
             })
             ->join('partners as pp', 'pp.id', '=', 's.partner_id')
             ->where('p.status', true)
-            ->where('pp.id', $authUser->id)
+            ->where('pp.id', $authUser->partner_id)
             ->first()
             ->total_income;
 
@@ -43,7 +43,7 @@ class DashboardController extends Controller
             ->join('partners as pp', 'pp.id', '=', 's.partner_id')
             ->leftJoin('payment_logs as p', 'u.id', '=', 'p.user_id')
             ->where('s.offer_id', 6)
-            ->where('pp.id', $authUser->id)
+            ->where('pp.id', $authUser->partner_id)
             ->whereNotNull('pp.name')
             ->where('p.status', true)
             ->where('p.payment_type', '=', 'subscription')
@@ -63,7 +63,7 @@ class DashboardController extends Controller
             })
             ->leftJoin('payment_logs as p', 'u.id', '=', 'p.user_id')
             ->where('s.offer_id', 6)
-            ->where('pp.id', $authUser->id)
+            ->where('pp.id', $authUser->partner_id)
             ->whereNotNull('pp.name')
             ->where('p.status', true)
             ->where('p.payment_type', '=', 'subscription')
@@ -105,7 +105,7 @@ class DashboardController extends Controller
             ->join('partners as pp', 'pp.id', '=', 's.partner_id')
             ->join('payment_to_partners as ptp', 'pp.id', '=', 'ptp.partner_id')
             ->where('p.status', true)
-            ->where('pp.id', $authUser->id);
+            ->where('pp.id', $authUser->partner_id);
 
         $result = DB::connection('readonly')->table(DB::raw("({$dataSubquery->toSql()}) as d"))
             ->mergeBindings($dataSubquery)
@@ -135,7 +135,7 @@ class DashboardController extends Controller
             ->join('partners as pp', 'pp.id', '=', 's.partner_id')
             ->where('p.offer_id', 6)
             ->where('p.status', true)
-            ->where('pp.id', $authUser->id) //17
+            ->where('pp.id', $authUser->partner_id) //17
             ->when($request->filled('dateFrom'), function ($query) use ($request) {
                 $query->whereDate('p.created_at', '>=', $request->input('dateFrom'));
             })
