@@ -105,8 +105,8 @@ class DashboardController extends Controller
             ->where('partner_id', $authUser->partner_id)
             ->sum('amount');
 
-        $available_balances = number_format($incomeSum - $payoutsSum, 2, '.', '');
-
+//        $available_balances = number_format($incomeSum - $payoutsSum, 2, '.', '');
+        $available_balances = (round($incomeSum * 2) / 2);
 //        if ($result->isEmpty()) {
 //            $available_balances = 0;
 //        } else {
