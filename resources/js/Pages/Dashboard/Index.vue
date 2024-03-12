@@ -47,7 +47,7 @@
   </div>
 
   <!--  Widget -->
-  <div style="display: flex; justify-content: center; align-items: center;" class="mb-8">
+  <div style="display: flex; align-items: center;" class="mb-8">
 
     <div data-popover-target="popover-2" type="button" class="card w-1/5 mr-4 rounded-md  shadow-xl">
       <div class="card-body">
