@@ -113,7 +113,7 @@
       <h3 class="font-semibold text-gray-900 dark:text-white">Revenue share</h3>
     </div>
     <div class="px-3 py-2">
-      <p>And here's some amazing content. It's very engaging. Right?</p>
+      <p>Вы получаете % от каждой транзакции пользователя, которого привели</p>
     </div>
     <div data-popper-arrow></div>
   </div>
@@ -135,7 +135,7 @@
       <h3 class="font-semibold text-gray-900 dark:text-white">Доступный баланс:</h3>
     </div>
     <div class="px-3 py-2">
-      <p>And here's some amazing content. It's very engaging. Right?</p>
+      <p>Сумма доступная для вывода. Запросите вывод в разделе Выплаты.</p>
     </div>
     <div data-popper-arrow></div>
   </div>
@@ -146,7 +146,7 @@
       <h3 class="font-semibold text-gray-900 dark:text-white">Подписчиков:</h3>
     </div>
     <div class="px-3 py-2">
-      <p>And here's some amazing content. It's very engaging. Right?</p>
+      <p>Количество Ваших подписчиков за всё время.</p>
     </div>
     <div data-popper-arrow></div>
   </div>
@@ -157,7 +157,7 @@
       <h3 class="font-semibold text-gray-900 dark:text-white">Активных подписчиков:</h3>
     </div>
     <div class="px-3 py-2">
-      <p>And here's some amazing content. It's very engaging. Right?</p>
+      <p>Столько Ваших пользователей подписано сейчас.</p>
     </div>
     <div data-popper-arrow></div>
   </div>
