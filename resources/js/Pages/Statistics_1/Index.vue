@@ -4,6 +4,24 @@
     <h1 class="mb-8 text-3xl font-bold">Конверсии</h1>
   </div>
 
+  <div class="flex-container flex space-x-4">
+    <div class="relative z-0 w-1/5 mb-6 group">
+      <DateInput v-model:value="form.dateFrom" title="Дата с" type="date" />
+    </div>
+
+    <div class="relative z-0 w-1/5 mb-6 group">
+      <DateInput v-model:value="form.dateTo" title="Дата по" type="date" />
+    </div>
+
+    <div class="flex items-center">
+      <button v-show="hasFilters" @click="reset"
+              class="shadow-xl bg-transparent hover:bg-white text-grey-dark font-semibold hover:border-b-1 py-2 px-4 border border-gray hover:border-transparent rounded ml-2">
+        Очистить фильтр
+      </button>
+    </div>
+  </div>
+
+
   <div class="bg-white rounded-md rounded shadow-xl overflow-x-auto mt-4">
     <table class="w-full whitespace-nowrap">
       <tr class="text-left font-bold">
@@ -59,14 +77,76 @@
 <script>
 import {Head} from '@inertiajs/inertia-vue3'
 import Layout from '@/Shared/Layout'
+import DateInput from '@/Shared/DateInput.vue'
+import throttle from 'lodash/throttle'
+import pickBy from 'lodash/pickBy'
 
 export default {
   components: {
+    DateInput,
     Head,
   },
   layout: Layout,
   props: {
     tableConversion: Array
-  }
+  },
+  data: function() {
+    return {
+      form: {
+        dateFrom: null,
+        dateTo: null,
+      },
+      searchOn: false,
+    }
+  },
+  mounted() {
+    this.reset()
+  },
+  computed: {
+    hasFilters() {
+      return true
+    },
+  },
+  methods: {
+    clearFilters: function() {
+    },
+    dataFrom() {
+      const currentDate = new Date();
+      const thirtyDaysAgo = new Date(currentDate);
+      thirtyDaysAgo.setDate(currentDate.getDate() - 30);
+
+      const yyyy = thirtyDaysAgo.getFullYear();
+      const mm = String(thirtyDaysAgo.getMonth() + 1).padStart(2, '0');
+      const dd = String(thirtyDaysAgo.getDate()).padStart(2, '0');
+      this.form.dateFrom = `${yyyy}-${mm}-${dd}`;
+    },
+    dataTo() {
+      const currentDate = new Date();
+      const yyyy = currentDate.getFullYear();
+      const mm = String(currentDate.getMonth() + 1).padStart(2, '0');
+      const dd = String(currentDate.getDate()).padStart(2, '0');
+      this.form.dateTo = `${yyyy}-${mm}-${dd}`;
+    },
+    reset() {
+      this.dataFrom()
+      this.dataTo()
+    },
+    watch: {
+      form: {
+        deep: true,
+        handler: throttle(function() {
+          this.$inertia.get('/statistic_1', pickBy(this.form), {
+            onBefore: () => {
+              this.searchOn = true
+            },
+            onSuccess: () => {
+              this.searchOn = false
+            },
+            preserveState: true,
+          })
+        }, 150),
+      },
+    },
+  },
 }
 </script>
