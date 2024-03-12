@@ -181,7 +181,7 @@ class DashboardController extends Controller
             })
             ->groupBy('day', 'src');
 
-        $tableScribers = DB::connection('readonly')
+        $result = DB::connection('readonly')
             ->table(DB::raw("({$dataSubquery->toSql()}) as d"))
             ->leftJoin(DB::raw("({$registeredBySourceSubquery->toSql()}) as rbs"), function ($join) {
                 $join->on('rbs.day', '=', 'd.day')->on('rbs.src', '=', 'd.src');
@@ -198,12 +198,26 @@ class DashboardController extends Controller
                 'sbs.cnt as subscribed',
                 DB::raw('FLOOR(COALESCE(sbs.cnt * 100.0 / rbs.cnt, 0)) AS cr'),
                 DB::raw('COUNT(d.pid) as trx'),
-                DB::raw('ROUND(SUM(d.income)::numeric/2, 2) as total_income')
+                DB::raw('SUM(d.income)/2 as total_income')
             )
             ->groupBy('d.day', 'rbs.cnt', 'sbs.cnt')
             ->orderByDesc('d.day')
             ->orderByDesc('total_income')
             ->get();
+
+
+        $tableScribers = $result->map(function ($item) {
+            $rounded_value = round($item->total_income * 2) / 2;
+            $newObject = new \stdClass;
+            $newObject->day = $item->day;
+            $newObject->registered = $item->registered;
+            $newObject->subscribed = $item->subscribed;
+            $newObject->cr = $item->cr;
+            $newObject->trx = $item->trx;
+            $newObject->total_income = $rounded_value;
+            return $newObject;
+        });
+
 
         return Inertia::render('Dashboard/Index', ['source_name' => $source->name, 'widget_total_income' => $totalIncome, 'widget_available_balances' => $available_balances, 'widget_period_subscribed' => $all_subscriptions, 'widget_active_subscribed' => $acive_subscriptions, 'tableScribers' => DateFilterResource::collection($tableScribers)]);
 
