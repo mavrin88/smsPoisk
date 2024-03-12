@@ -131,21 +131,21 @@ export default {
       this.dataFrom()
       this.dataTo()
     },
-    watch: {
-      form: {
-        deep: true,
-        handler: throttle(function() {
-          this.$inertia.get('/statistic_1', pickBy(this.form), {
-            onBefore: () => {
-              this.searchOn = true
-            },
-            onSuccess: () => {
-              this.searchOn = false
-            },
-            preserveState: true,
-          })
-        }, 150),
-      },
+  },
+  watch: {
+    form: {
+      deep: true,
+      handler: throttle(function() {
+        this.$inertia.get('/statistic_1', pickBy(this.form), {
+          onBefore: () => {
+            this.searchOn = true
+          },
+          onSuccess: () => {
+            this.searchOn = false
+          },
+          preserveState: true,
+        })
+      }, 150),
     },
   },
 }
