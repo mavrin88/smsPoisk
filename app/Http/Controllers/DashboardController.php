@@ -79,7 +79,7 @@ class DashboardController extends Controller
             ->select('u.id AS pid')
             ->whereIn('u.status', ['subscribed', 'lite']);
 
-        $result = DB::connection('readonly')
+        $acive_subscriptions = DB::connection('readonly')
             ->table(DB::raw("({$allUsersSubquery->toSql()}) as u"))
             ->leftJoin(DB::raw("({$subscribersSubquery->toSql()}) as s"), function($join) {
                 $join->on('s.pid', '=', 'u.pid');
@@ -89,9 +89,9 @@ class DashboardController extends Controller
             ->mergeBindings($subscribersSubquery)
             ->get();
 
-        $acive_subscriptions = $result[0];
-        $acive_subscriptions = (int) $acive_subscriptions->subscriptions;
-        $acive_subscriptions += 1;
+//        $acive_subscriptions = $result[0];
+//        $acive_subscriptions = (int) $acive_subscriptions->subscriptions;
+//        $acive_subscriptions += 1;
 
 //------------------------------- + Виджет Доступные балансы:  -----------------------------------
 
