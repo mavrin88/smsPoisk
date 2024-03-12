@@ -56,7 +56,7 @@
   </div>
 
   <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="submit">
-    <a href="https://t.me/smspoisk_manager" class="text-white">Запросить выплату</a>
+    <a href="https://t.me/smspoisk_manager" target="_blank" class="text-white">Запросить выплату</a>
   </loading-button>
 
   <h1 class="ml-5 text-uppercase font-black">Предыдущие выплаты:</h1>
