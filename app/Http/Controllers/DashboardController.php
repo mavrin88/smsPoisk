@@ -88,10 +88,7 @@ class DashboardController extends Controller
             ->mergeBindings($allUsersSubquery)
             ->mergeBindings($subscribersSubquery)
             ->get();
-
-//        $acive_subscriptions = $result[0];
-//        $acive_subscriptions = (int) $acive_subscriptions->subscriptions;
-//        $acive_subscriptions += 1;
+        $acive_subscriptions = $acive_subscriptions[0]->subscriptions;
 
 //------------------------------- + Виджет Доступные балансы:  -----------------------------------
 
