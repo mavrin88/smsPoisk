@@ -7,7 +7,7 @@
 
   <div class="flex-container flex space-x-4" style="display: flex; justify-content: center; align-items: center;">
 
-    <div class="flex items-center px-4 py-3 bg-gray-50 border-t border-gray-100 shadow mb-8"
+    <div class="flex items-center px-4 py-3 bg-white border-t border-gray-100 shadow mb-8"
          data-popover-target="popover-1" type="button">
       <div class="button-container">
         <h6 class="text-uppercase text-muted leading-relaxed">Ваш тип партнерства </h6>
@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <div class="flex items-center px-4 py-3 bg-gray-50 border-t border-gray-100 shadow mb-8 ">
+    <div class="flex items-center px-4 py-3 bg-white border-t border-gray-100 shadow mb-8 ">
       <div class="button-container">
         <h6 class="text-uppercase text-muted leading-relaxed">Трекинг ссылка:</h6>
         <a :href="getEncodedLend_1()" target="_blank">https://smspoisk.ru/?source={{ source_name }}
@@ -33,7 +33,7 @@
   </div>
 
 
-  <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100 shadow mb-8">
+  <div class="flex items-center px-8 py-4 bg-white border-t border-gray-100 shadow mb-8">
     <div class="p-1 mr-2 w-1/1">
       <h6 class="text-uppercase text-muted leading-relaxed">Использование параметра source в ссылке обязательно и его
         значение нельзя
