@@ -162,11 +162,7 @@
     <div data-popper-arrow></div>
   </div>
 
-  <div class="flex-container flex space-x-4 mb-9">
-    <div class="relative  mr-1 group">
-      <h1 class="ml-5 text-uppercase font-black">Статистика: </h1>
-    </div>
-  </div>
+      <h1 class="text-3xl font-bold mb-9">Статистика: </h1>
 
   <div class="flex-container flex space-x-4">
     <div class="relative z-0 w-1/5 mb-6 group">
