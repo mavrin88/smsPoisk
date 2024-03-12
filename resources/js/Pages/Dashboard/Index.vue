@@ -57,7 +57,7 @@
             <h6 class="text-uppercase text-muted mb-2">
               Баланс:
             </h6>
-            <span class="text-2xl pl-2 pr-2 pt-4">{{ widget_total_income }}</span>
+            <span class="text-2xl pr-2 pt-4">{{ widget_total_income }}</span>
           </div>
         </div>
       </div>
@@ -71,7 +71,7 @@
             <h6 class="text-uppercase text-muted mb-2">
               Доступный баланс:
             </h6>
-            <span class="text-2xl pl-2 pr-2 pt-4">{{ widget_available_balances }}</span>
+            <span class="text-2xl pr-2 pt-4">{{ widget_available_balances }}</span>
           </div>
         </div>
       </div>
@@ -85,7 +85,7 @@
             <h6 class="text-uppercase text-muted mb-2">
               Подписчиков:
             </h6>
-            <span class="text-2xl pl-2 pr-2 pt-4">{{ widget_period_subscribed }}</span>
+            <span class="text-2xl pr-2 pt-4">{{ widget_period_subscribed }}</span>
           </div>
         </div>
       </div>
@@ -99,7 +99,7 @@
             <h6 class="text-uppercase text-muted mb-2">
               Активных подписчиков:
             </h6>
-            <span class="text-2xl pl-2 pr-2 pt-4">{{ widget_active_subscribed }}</span>
+            <span class="text-2xl pr-2 pt-4">{{ widget_active_subscribed }}</span>
           </div>
         </div>
       </div>
