@@ -121,7 +121,7 @@ class DashboardController extends Controller
         if ($result->isEmpty()) {
             $available_balances = 0;
         } else {
-            $available_balances = $result[0];
+            $available_balances = number_format($result[0], 2, '.', '');
         }
 
 //------------------------------- Таблица подписчиков  -----------------------------------
