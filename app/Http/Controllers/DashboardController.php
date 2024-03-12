@@ -209,8 +209,7 @@ class DashboardController extends Controller
                 'sbs.cnt as subscribed',
                 DB::raw('FLOOR(COALESCE(sbs.cnt * 100.0 / rbs.cnt, 0)) AS cr'),
                 DB::raw('COUNT(d.pid) as trx'),
-                DB::raw('SUM(d.income)/2 as total_income')
-            )
+                DB::raw('ROUND(SUM(d.income)/2 as total_income'))
             ->groupBy('d.day', 'rbs.cnt', 'sbs.cnt')
             ->orderByDesc('d.day')
             ->orderByDesc('total_income')
