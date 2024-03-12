@@ -49,19 +49,19 @@
   <!--  Widget -->
   <div style="display: flex; align-items: center;" class="mb-8">
 
-    <div data-popover-target="popover-2" type="button" class="card w-1/5 mr-4 rounded-md  shadow-xl">
-      <div class="card-body">
-        <div class="row align-items-center gx-0">
-          <div class="col">
-            <!-- Title -->
-            <h6 class="text-uppercase text-muted mb-2">
-              Баланс:
-            </h6>
-            <span class="text-2xl pr-2 pt-4">{{ widget_total_income }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
+<!--    <div data-popover-target="popover-2" type="button" class="card w-1/5 mr-4 rounded-md  shadow-xl">-->
+<!--      <div class="card-body">-->
+<!--        <div class="row align-items-center gx-0">-->
+<!--          <div class="col">-->
+<!--            &lt;!&ndash; Title &ndash;&gt;-->
+<!--            <h6 class="text-uppercase text-muted mb-2">-->
+<!--              Баланс:-->
+<!--            </h6>-->
+<!--            <span class="text-2xl pr-2 pt-4">{{ widget_total_income }}</span>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 
     <div data-popover-target="popover-3" type="button" class="card w-1/5 mr-4 rounded-md  shadow-xl">
       <div class="card-body">
