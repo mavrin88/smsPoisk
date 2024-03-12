@@ -179,7 +179,7 @@
 
     <div class="flex items-center">
       <button v-show="hasFilters" @click="reset"
-              class="shadow-xl bg-transparent hover:bg-white text-grey-dark font-semibold hover:border-b-1 py-2 px-4 border border-gray hover:border-transparent rounded ml-2">
+              class="bg-transparent hover:bg-white text-grey-dark font-semibold hover:border-b-1 py-2 px-4 border border-gray hover:border-transparent rounded ml-2">
         Очистить фильтр
       </button>
     </div>
