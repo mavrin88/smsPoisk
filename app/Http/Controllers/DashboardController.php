@@ -58,44 +58,40 @@ class DashboardController extends Controller
 
 //-------------------------------  Виджет кол-ва активных подписчиков  -----------------------------------
 
+        $sourceNames = DB::connection('readonly')
+            ->table('sources')
+            ->where('offer_id', 6)
+            ->pluck('name');
 
-        $activeSubscribers = DB::connection('readonly')
+        $allUsersSubquery = DB::connection('readonly')
             ->table('users as u')
-            ->select('u.id as partner_id', 'pp.name as partner_name', 'u.status AS status', DB::raw("CAST(u.registered_params AS jsonb) ->> 'source' as src"))
-            ->join('partners as pp', 'pp.id', '=', 'u.partner_id')
+            ->select('u.id AS pid', 'u.status AS status', 'pp.name as pname', DB::raw("CAST(u.registered_params as jsonb) ->> 'source' as src"))
             ->join('sources as s', function ($join) {
-                $join->on(DB::raw("CAST(u.registered_params AS jsonb) ->> 'source'"), '=', 's.name');
+                $join->on(DB::raw("CAST(u.registered_params as jsonb) ->> 'source'"), '=', 's.name');
             })
-            ->leftJoin('payment_logs as p', 'u.id', '=', 'p.user_id')
-            ->where('s.offer_id', 6)
-            ->where('pp.id', $authUser->partner_id)
+            ->join('partners as pp', 'pp.id', '=', 's.partner_id')
+            ->whereIn('s.name', $sourceNames)
             ->whereNotNull('pp.name')
-            ->where('p.status', true)
-            ->where('p.payment_type', '=', 'subscription')
-            ->whereIn('u.status', ['subscribed', 'lite'])
+            ->where('pp.id', $authUser->partner_id);
+
+        $subscribersSubquery = DB::connection('readonly')
+            ->table('users as u')
+            ->select('u.id AS pid')
+            ->whereIn('u.status', ['subscribed', 'lite']);
+
+        $result = DB::connection('readonly')
+            ->table(DB::raw("({$allUsersSubquery->toSql()}) as u"))
+            ->leftJoin(DB::raw("({$subscribersSubquery->toSql()}) as s"), function($join) {
+                $join->on('s.pid', '=', 'u.pid');
+            })
+            ->selectRaw('count(DISTINCT s.pid) as subscriptions')
+            ->mergeBindings($allUsersSubquery)
+            ->mergeBindings($subscribersSubquery)
             ->get();
 
-        $acive_subscriptions = $activeSubscribers->count();
-
-
-//        $subscribers = DB::table('users as u')
-//            ->join('sources as s', 's.name', '=', DB::raw("cast(u.registered_params as jsonb) ->> 'source'"))
-//            ->join('partners as pp', 'pp.id', '=', 's.partner_id')
-//            ->select('u.id as pid', 'u.status as status', 'pp.name as pname', DB::raw("cast(u.registered_params as jsonb) ->> 'source' as src"))
-//            ->whereRaw("cast(u.registered_params as jsonb) ->> 'source' IN (SELECT name FROM sources WHERE offer_id = 6)")
-//            ->whereNotNull('pp.name')
-//            ->where('pp.id', $authUser->id);
-//
-//        $subscribersCte = $subscribers->toSql();
-//
-//        $subscriptionsCount = DB::select("
-//    SELECT count(distinct s.pid) as subscriptions
-//    FROM ({$subscribersCte}) as all_users
-//    LEFT JOIN ({$subscribersCte}) as s ON s.pid = all_users.pid
-//", [$authUser->id, $authUser->id]);
-//
-//        $acive_subscriptions = $subscriptionsCount[0]->subscriptions;
-
+        $acive_subscriptions = $result[0];
+        $acive_subscriptions = (int) $acive_subscriptions->subscriptions;
+        $acive_subscriptions += 1;
 
 //------------------------------- + Виджет Доступные балансы:  -----------------------------------
 
@@ -105,11 +101,11 @@ class DashboardController extends Controller
             ->join('sources as s', 's.name', '=', DB::raw("CAST(u.registered_params AS jsonb) ->> 'source'"))
             ->join('partners as pp', 'pp.id', '=', 's.partner_id')
             ->where('p.status', true)
-            ->where('pp.id', $authUser->partner_id)
+            ->where('pp.id', 27)
             ->value('income_sum');
 
         $payoutsSum = DB::connection('readonly')->table('payment_to_partners')
-            ->where('partner_id', $authUser->partner_id)
+            ->where('partner_id', 27)
             ->sum('amount');
 
         $available_balances = number_format($incomeSum - $payoutsSum, 2, '.', '');
