@@ -105,11 +105,11 @@ class DashboardController extends Controller
             ->join('sources as s', 's.name', '=', DB::raw("CAST(u.registered_params AS jsonb) ->> 'source'"))
             ->join('partners as pp', 'pp.id', '=', 's.partner_id')
             ->where('p.status', true)
-            ->where('pp.id', 17)
+            ->where('pp.id', $authUser->id)
             ->value('income_sum');
 
         $payoutsSum = DB::connection('readonly')->table('payment_to_partners')
-            ->where('partner_id', 17)
+            ->where('partner_id', $authUser->id)
             ->sum('amount');
 
         $available_balances = number_format($incomeSum - $payoutsSum, 2, '.', '');
