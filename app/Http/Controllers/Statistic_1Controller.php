@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ConversionResource;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class Statistic_1Controller extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $authUser = \auth()->user();
         $dataSubquery = DB::connection('readonly')
@@ -29,7 +30,13 @@ class Statistic_1Controller extends Controller
             ->join('sources as s', 's.name', '=', DB::raw("CAST(u.registered_params as jsonb) ->> 'source'"))
             ->join('partners as pp', 'pp.id', '=', 's.partner_id')
             ->where('p.status', true)
-            ->where('pp.id', $authUser->partner_id);
+            ->where('pp.id', $authUser->partner_id)
+            ->when($request->filled('dateFrom'), function ($query) use ($request) {
+                $query->whereDate('p.created_at', '>=', $request->input('dateFrom'));
+            })
+            ->when($request->filled('dateTo'), function ($query) use ($request) {
+                $query->whereDate('p.created_at', '<=', $request->input('dateTo'));
+            });
 
         $subquery = $dataSubquery->toSql();
         $bindings = $dataSubquery->getBindings();
