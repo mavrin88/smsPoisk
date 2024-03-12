@@ -1,7 +1,7 @@
 <template>
   <div>
     <Head title="Главная" />
-    <h1 class="mb-8 text-3xl font-bold">Главная
+    <h1 class="mb-8 text-3xl font-bold">Параметры
     </h1>
   </div>
 
