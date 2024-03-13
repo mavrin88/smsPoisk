@@ -10,14 +10,14 @@
     <div class="flex items-center px-4 py-3 bg-white border-t border-gray-100 shadow mb-8"
          data-popover-target="popover-1" type="button">
       <div class="button-container">
-        <h6 class="text-uppercase text-muted leading-relaxed">Ваш тип партнерства </h6>
+        <h6 class="text-uppercase text-muted leading-normal">Ваш тип партнерства </h6>
         <a class="">Revenue share</a>
       </div>
     </div>
 
     <div class="flex items-center px-4 py-3 bg-white border-t border-gray-100 shadow mb-8 ">
       <div class="button-container">
-        <h6 class="text-uppercase text-muted leading-relaxed">Трекинг ссылка:</h6>
+        <h6 class="text-uppercase text-muted leading-normal">Трекинг ссылка:</h6>
         <a :href="getEncodedLend_1()" target="_blank">https://smspoisk.ru/?source={{ source_name }}
         </a>
       </div>
@@ -35,7 +35,7 @@
 
   <div class="flex items-center px-8 py-4 bg-white border-t border-gray-100 shadow mb-8">
     <div class="p-1 mr-2 w-1/1">
-      <h6 class="text-uppercase text-muted leading-relaxed">Использование параметра source в ссылке обязательно и его
+      <h6 class="text-uppercase text-muted leading-normal">Использование параметра source в ссылке обязательно и его
         значение нельзя
         менять! Для дополнительной атрибуции
         трафика Вы можете использовать параметры URL: s1, s2, s3, s4, s5. Т.о. Трекинг ссылка будет вида:<span
@@ -68,7 +68,7 @@
         <div class="row align-items-center gx-0">
           <div class="col">
             <!-- Title -->
-            <h6 class="text-uppercase text-muted mb-2">
+            <h6 class="text-uppercase text-muted mb-1">
               Доступный баланс:
             </h6>
             <span class="text-2xl pr-2 pt-4">{{ widget_available_balances }}</span>
@@ -82,7 +82,7 @@
         <div class="row align-items-center gx-0">
           <div class="col">
             <!-- Title -->
-            <h6 class="text-uppercase text-muted mb-2">
+            <h6 class="text-uppercase text-muted mb-1">
               Подписчиков:
             </h6>
             <span class="text-2xl pr-2 pt-4">{{ widget_period_subscribed }}</span>
@@ -96,7 +96,7 @@
         <div class="row align-items-center gx-0">
           <div class="col">
             <!-- Title -->
-            <h6 class="text-uppercase text-muted mb-2">
+            <h6 class="text-uppercase text-muted mb-1">
               Активных подписчиков:
             </h6>
             <span class="text-2xl pr-2 pt-4">{{ widget_active_subscribed }}</span>
