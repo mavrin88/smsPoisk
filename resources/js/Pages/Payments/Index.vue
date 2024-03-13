@@ -59,7 +59,7 @@
     <a href="https://t.me/smspoisk_manager" target="_blank" class="text-white">Запросить выплату</a>
   </loading-button>
 
-  <h1 class="ml-5 text-uppercase font-black">Предыдущие выплаты:</h1>
+  <h1 class="ml-5 text-uppercase font-bold">Предыдущие выплаты:</h1>
   <div class="bg-white rounded-md rounded shadow-xl overflow-x-auto mt-4">
     <table class="w-full whitespace-nowrap">
       <tr class="text-left font-bold">
