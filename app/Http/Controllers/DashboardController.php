@@ -103,9 +103,13 @@ class DashboardController extends Controller
             ->groupBy('pt.payouts_sum')
             ->get();
 
-        $balances = $result[0]->available_balance;
+if ($result->isNotEmpty()){
+    $balances = $result[0]->available_balance;
+    $available_balances = (round($balances * 2) / 2);
+}else{
+    $available_balances = 0;
+}
 
-        $available_balances = (round($balances * 2) / 2);
 //------------------------------- Таблица подписчиков  -----------------------------------
 
         $dataSubquery = DB::connection('readonly')
