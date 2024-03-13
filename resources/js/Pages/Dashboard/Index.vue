@@ -1,13 +1,13 @@
 <template>
   <div>
     <Head title="Главная" />
-    <h1 class="mb-8 text-3xl font-bold">Параметры
+    <h1 class="mb-4 text-3xl font-bold">Параметры
     </h1>
   </div>
 
-  <div class="flex-container flex space-x-4" style="display: flex; justify-content: center; align-items: center;">
+  <div class="flex-container flex space-x-4" style="display: flex; align-items: center;">
 
-    <div class="flex items-center px-4 py-3 bg-white border-t border-gray-100 shadow mb-8"
+    <div class="flex items-center px-4 py-3 bg-white border-t border-gray-100 shadow mb-4"
          data-popover-target="popover-1" type="button">
       <div class="button-container">
         <h6 class="text-uppercase text-muted leading-tight">Ваш тип партнерства </h6>
@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <div class="flex items-center px-4 py-3 bg-white border-t border-gray-100 shadow mb-8 ">
+    <div class="flex items-center px-4 py-3 bg-white border-t border-gray-100 shadow mb-4">
       <div class="button-container">
         <h6 class="text-uppercase text-muted leading-tight">Трекинг ссылка:</h6>
         <a :href="getEncodedLend_1()" target="_blank">https://smspoisk.ru/?source={{ source_name }}
@@ -33,7 +33,7 @@
   </div>
 
 
-  <div class="flex items-center px-8 py-4 bg-white border-t border-gray-100 shadow mb-8">
+  <div class="flex items-center px-8 py-4 bg-white border-t border-gray-100 shadow mb-16">
     <div class="p-1 mr-2 w-1/1">
       <h6 class="text-uppercase text-muted leading-tight">Использование параметра source в ссылке обязательно и его
         значение нельзя
@@ -47,7 +47,7 @@
   </div>
 
   <!--  Widget -->
-  <div style="display: flex; align-items: center;" class="mb-8">
+  <div style="display: flex; align-items: center;" class="mb-16">
 
 <!--    <div data-popover-target="popover-2" type="button" class="card w-1/5 mr-4 rounded-md  shadow-xl">-->
 <!--      <div class="card-body">-->
@@ -162,10 +162,10 @@
     <div data-popper-arrow></div>
   </div>
 
-      <h1 class="text-3xl font-bold mb-9">Статистика: </h1>
+      <h1 class="text-3xl font-bold mb-4">Статистика: </h1>
 
   <div class="flex-container flex space-x-4">
-    <div class="relative z-0 w-1/5 mb-6 mr-5 group">
+    <div class="relative z-0 w-1/5 mb-3 mr-5 group">
       <DateInput v-model:value="form.dateFrom" title="Дата с" type="date" />
     </div>
 
