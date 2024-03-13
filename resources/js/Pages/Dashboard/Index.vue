@@ -39,7 +39,7 @@
         значение нельзя
         менять! Для дополнительной атрибуции
         трафика Вы можете использовать параметры URL: s1, s2, s3, s4, s5. Т.о. Трекинг ссылка будет вида:<span
-          class="text-black leading-relaxed hover:underline link-hover"> https://smspoisk.ru/land2/?source={{
+          class="text-black leading-tight hover:underline link-hover"> https://smspoisk.ru/land2/?source={{
             source_name
           }}&s1=dzen&s2=article1</span>
       </h6>
