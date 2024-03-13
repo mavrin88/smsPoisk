@@ -4,7 +4,7 @@
     <h1 class="mb-8 text-3xl font-bold">Условия выплат </h1>
   </div>
 
-  <div class="bg-white rounded-md shadow overflow-x-auto w-1/2 mt-3">
+  <div class="bg-white rounded-md shadow overflow-x-auto w-1/2 mt-3 mb-4">
 
     <table class="w-full whitespace-nowrap">
       <tr class="text-left font-bold">
@@ -55,11 +55,11 @@
     </table>
   </div>
 
-  <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="submit">
+  <loading-button :loading="form.processing" class="btn-indigo" type="submit">
     <a href="https://t.me/smspoisk_manager" target="_blank" class="text-white">Запросить выплату</a>
   </loading-button>
 
-  <h1 class="ml-5 text-uppercase font-bold">Предыдущие выплаты:</h1>
+  <h1 class="ml-5 mt-4 text-uppercase font-bold">Предыдущие выплаты:</h1>
   <div class="bg-white rounded-md rounded shadow-xl overflow-x-auto mt-4">
     <table class="w-full whitespace-nowrap">
       <tr class="text-left font-bold">
