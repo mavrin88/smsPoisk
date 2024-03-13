@@ -92,27 +92,20 @@ class DashboardController extends Controller
 
 //------------------------------- + Виджет Доступные балансы:  -----------------------------------
 
-        $incomeSum = DB::connection('readonly')->table('payment_logs as p')
-            ->selectRaw('SUM(p.income) / 2 as income_sum')
+        $result =  DB::connection('readonly')->table('payment_logs as p')
+            ->select(DB::raw('SUM(p.income) / 2 - pt.payouts_sum as available_balance'))
             ->join('users as u', 'u.id', '=', 'p.user_id')
-            ->join('sources as s', 's.name', '=', DB::raw("CAST(u.registered_params AS jsonb) ->> 'source'"))
+            ->join('sources as s', DB::raw("cast(u.registered_params as jsonb)->>'source'"), '=', 's.name')
             ->join('partners as pp', 'pp.id', '=', 's.partner_id')
             ->where('p.status', true)
             ->where('pp.id', $authUser->partner_id)
-            ->value('income_sum');
+            ->join(DB::raw('(SELECT SUM(amount) as payouts_sum FROM payment_to_partners WHERE partner_id = 27) as pt'), DB::raw('1'), '=', DB::raw('1'))
+            ->groupBy('pt.payouts_sum')
+            ->get();
 
-        $payoutsSum = DB::connection('readonly')->table('payment_to_partners')
-            ->where('partner_id', $authUser->partner_id)
-            ->sum('amount');
+        $balances = $result[0]->available_balance;
 
-//        $available_balances = number_format($incomeSum - $payoutsSum, 2, '.', '');
-        $available_balances = (round($incomeSum * 2) / 2);
-//        if ($result->isEmpty()) {
-//            $available_balances = 0;
-//        } else {
-//            $available_balances = number_format($result[0], 2, '.', '');
-//        }
-
+        $available_balances = (round($balances * 2) / 2);
 //------------------------------- Таблица подписчиков  -----------------------------------
 
         $dataSubquery = DB::connection('readonly')
