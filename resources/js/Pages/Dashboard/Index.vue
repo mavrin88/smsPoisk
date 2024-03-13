@@ -63,7 +63,7 @@
 <!--      </div>-->
 <!--    </div>-->
 
-    <div data-popover-target="popover-3" type="button" class="card w-1/5 mr-4 rounded-md  shadow-xl">
+    <div data-popover-target="popover-3" type="button" class="card w-1/5 mr-9 rounded-md  shadow-xl">
       <div class="card-body">
         <div class="row align-items-center gx-0">
           <div class="col">
@@ -77,7 +77,7 @@
       </div>
     </div>
 
-    <div data-popover-target="popover-4" type="button" class="card w-1/5 mr-4 rounded-md shadow-xl">
+    <div data-popover-target="popover-4" type="button" class="card w-1/5 mr-9 rounded-md shadow-xl">
       <div class="card-body">
         <div class="row align-items-center gx-0">
           <div class="col">
@@ -165,11 +165,11 @@
       <h1 class="text-3xl font-bold mb-9">Статистика: </h1>
 
   <div class="flex-container flex space-x-4">
-    <div class="relative z-0 w-1/5 mb-6 group">
+    <div class="relative z-0 w-1/5 mb-6 mr-5 group">
       <DateInput v-model:value="form.dateFrom" title="Дата с" type="date" />
     </div>
 
-    <div class="relative z-0 w-1/5 mb-6 group">
+    <div class="relative z-0 w-1/5 mb-6 mr-5 group">
       <DateInput v-model:value="form.dateTo" title="Дата по" type="date" />
     </div>
 
@@ -238,14 +238,28 @@ export default {
   layout: Layout,
 
   props: {
-    source_name: String,
-    widget_total_income: Number,
-    widget_available_balances: Number,
-    widget_period_subscribed: Number,
-    widget_active_subscribed: Number,
+    source_name: {
+      type: [Number, String],
+      default: ''
+    },
+    widget_total_income: {
+      type: [Number, String],
+      default: 0
+    },
+    widget_available_balances: {
+      type: [Number, String],
+      default: 0
+    },
+    widget_period_subscribed: {
+      type: [Number, String],
+      default: 0
+    },
+    widget_active_subscribed: {
+      type: [Number, String],
+      default: 0
+    },
     filters: Object,
-    tableScribers: Array,
-    isLoading: Boolean,
+    tableScribers: Object,
   },
 
   data: function() {
@@ -336,5 +350,8 @@ export default {
 
 .link-hover {
   cursor: pointer;
+}
+.flex-container .flex {
+  margin-right: 130px;
 }
 </style>
