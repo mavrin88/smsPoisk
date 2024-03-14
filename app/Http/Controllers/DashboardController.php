@@ -125,7 +125,7 @@ if ($result->isNotEmpty()){
             ->join('partners as pp', 'pp.id', '=', 's.partner_id')
             ->where('p.offer_id', 6)
             ->where('p.status', true)
-            ->where('pp.id', 27)
+            ->where('pp.id', $authUser->partner_id)
             ->when($request->filled('dateFrom'), function ($query) use ($request) {
                 $query->whereDate('p.created_at', '>=', $request->input('dateFrom'));
             })
@@ -194,7 +194,7 @@ if ($result->isNotEmpty()){
                 'sbs.cnt as subscribed',
                 DB::raw('FLOOR(COALESCE(sbs.cnt * 100.0 / rbs.cnt, 0)) AS cr'),
                 DB::raw('COUNT(d.pid) as trx'),
-                DB::raw('SUM(d.income)/2 as total_income')
+                DB::raw('CEILING((CAST(SUM(d.income)/2 AS numeric) * 20)) / 20.0 as total_income')
             )
             ->groupBy('d.day', 'rbs.cnt', 'sbs.cnt')
             ->orderByDesc('d.day')
@@ -203,7 +203,9 @@ if ($result->isNotEmpty()){
 
 
         $tableScribers = $result->map(function ($item) {
-            $rounded_value = round($item->total_income * 2) / 2;
+            $rounded = number_format($item->total_income , 2, '.', '');
+            $rounded_value = rtrim($rounded, '0');
+
             $newObject = new \stdClass;
             $newObject->day = $item->day;
             $newObject->registered = $item->registered;
