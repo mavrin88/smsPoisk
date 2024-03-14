@@ -99,7 +99,7 @@ class DashboardController extends Controller
             ->join('partners as pp', 'pp.id', '=', 's.partner_id')
             ->where('p.status', true)
             ->where('pp.id', $authUser->partner_id)
-            ->join(DB::raw('(SELECT SUM(amount) as payouts_sum FROM payment_to_partners WHERE partner_id = 27) as pt'), DB::raw('1'), '=', DB::raw('1'))
+            ->join(DB::raw("(SELECT SUM(amount) as payouts_sum FROM payment_to_partners WHERE partner_id = $authUser->partner_id) as pt"), DB::raw('1'), '=', DB::raw('1'))
             ->groupBy('pt.payouts_sum')
             ->get();
 
@@ -126,7 +126,7 @@ if ($result->isNotEmpty()){
             ->join('partners as pp', 'pp.id', '=', 's.partner_id')
             ->where('p.offer_id', 6)
             ->where('p.status', true)
-            ->where('pp.id', $authUser->partner_id)
+            ->where('pp.id', 27)
             ->when($request->filled('dateFrom'), function ($query) use ($request) {
                 $query->whereDate('p.created_at', '>=', $request->input('dateFrom'));
             })
