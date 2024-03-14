@@ -30,13 +30,13 @@ class Statistic_1Controller extends Controller
             ->join('sources as s', 's.name', '=', DB::raw("CAST(u.registered_params as jsonb) ->> 'source'"))
             ->join('partners as pp', 'pp.id', '=', 's.partner_id')
             ->where('p.status', true)
-            ->where('pp.id', $authUser->partner_id);
-//            ->when($request->filled('dateFrom'), function ($query) use ($request) {
-//                $query->whereDate('p.created_at', '>=', $request->input('dateFrom'));
-//            })
-//            ->when($request->filled('dateTo'), function ($query) use ($request) {
-//                $query->whereDate('p.created_at', '<=', $request->input('dateTo'));
-//            });
+            ->where('pp.id', $authUser->partner_id)
+            ->when($request->filled('dateFrom'), function ($query) use ($request) {
+                $query->whereDate('p.created_at', '>=', $request->input('dateFrom'));
+            })
+            ->when($request->filled('dateTo'), function ($query) use ($request) {
+                $query->whereDate('p.created_at', '<=', $request->input('dateTo'));
+            });
 
         $subquery = $dataSubquery->toSql();
         $bindings = $dataSubquery->getBindings();
