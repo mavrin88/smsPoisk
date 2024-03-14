@@ -88,7 +88,10 @@ export default {
   },
   layout: Layout,
   props: {
-    tableConversion: Array
+    tableConversion: {
+      type: Object,
+      required: true
+    }
   },
   data: function() {
     return {
