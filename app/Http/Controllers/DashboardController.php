@@ -39,7 +39,7 @@ class DashboardController extends Controller
 
 //------------------------------- + Виджет кол-ва подписчиков: -----------------------------------
 
-        $allsubScribers = DB::connection('readonly')
+        $all_subscriptions = DB::connection('readonly')
             ->table('users as u')
             ->select('u.id as partner_id', 'pp.name as partner_name', DB::raw("CAST(u.registered_params AS jsonb) ->> 'source' as src"))
             ->join('sources as s', function ($join) {
@@ -52,9 +52,8 @@ class DashboardController extends Controller
             ->whereNotNull('pp.name')
             ->where('p.status', true)
             ->where('p.payment_type', '=', 'subscription')
-            ->get();
-
-        $all_subscriptions = $allsubScribers->count();
+            ->distinct()
+            ->count('u.id');
 
 //-------------------------------  Виджет кол-ва активных подписчиков  -----------------------------------
 
