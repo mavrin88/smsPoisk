@@ -33,7 +33,6 @@ class RegistrationController extends Controller
             'password' => $passwordHash,
             'account_id' => rand(1, 100),
             'created_at' => now(),
-            'updated_at' => now(),
         ];
 
         $user = DB::connection('mysql')->table('users')->insertGetId($usersData);
@@ -53,7 +52,6 @@ class RegistrationController extends Controller
                 'password' => $passwordHash,
                 'registered_params' => json_encode($registeredParams),
                 'created_at' => now(),
-                'updated_at' => now(),
             ];
 
             $partner = DB::connection('manager')->table('partners')->insertGetId($partnerData);
@@ -76,7 +74,6 @@ class RegistrationController extends Controller
                 'is_cloaking' => true,
                 'offer_id' => 6,
                 'created_at' => now(),
-                'updated_at' => now(),
             ];
 
             $source = DB::connection('manager')->table('sources')->insert($sourceData);
@@ -87,7 +84,7 @@ class RegistrationController extends Controller
             DB::connection('mysql')
                 ->table('users')
                 ->where('id', $user)
-                ->update(['partner_id' => $partner]);
+                ->update(['partner_id' => $partner, 'updated_at' => now()]);
         }
 
         return redirect('/login');
