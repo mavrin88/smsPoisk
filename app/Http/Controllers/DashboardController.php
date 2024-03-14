@@ -92,7 +92,7 @@ class DashboardController extends Controller
 //------------------------------- + Виджет Доступные балансы:  -----------------------------------
 
         $result =  DB::connection('readonly')->table('payment_logs as p')
-            ->select(DB::raw('SUM(p.income) / 2 - pt.payouts_sum as available_balance'))
+            ->select(DB::raw('CEILING((CAST(SUM(p.income)/2 - pt.payouts_sum AS numeric) * 20)) / 20.0 as available_balance'))
             ->join('users as u', 'u.id', '=', 'p.user_id')
             ->join('sources as s', DB::raw("cast(u.registered_params as jsonb)->>'source'"), '=', 's.name')
             ->join('partners as pp', 'pp.id', '=', 's.partner_id')
@@ -104,7 +104,7 @@ class DashboardController extends Controller
 
 if ($result->isNotEmpty()){
     $balances = $result[0]->available_balance;
-    $available_balances = (round($balances * 2) / 2);
+    $available_balances = number_format($balances, 2, '.', '');
 }else{
     $available_balances = 0;
 }
