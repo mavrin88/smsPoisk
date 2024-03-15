@@ -80,7 +80,7 @@ class DashboardController extends Controller
 
         $acive_subscriptions = DB::connection('readonly')
             ->table(DB::raw("({$allUsersSubquery->toSql()}) as u"))
-            ->leftJoin(DB::raw("({$subscribersSubquery->toSql()}) as s"), function($join) {
+            ->leftJoin(DB::raw("({$subscribersSubquery->toSql()}) as s"), function ($join) {
                 $join->on('s.pid', '=', 'u.pid');
             })
             ->selectRaw('count(DISTINCT s.pid) as subscriptions')
@@ -91,23 +91,25 @@ class DashboardController extends Controller
 
 //------------------------------- + Виджет Доступные балансы:  -----------------------------------
 
-        $result =  DB::connection('readonly')->table('payment_logs as p')
-            ->select(DB::raw('CEILING((CAST(SUM(p.income)/2 - pt.payouts_sum AS numeric) * 20)) / 20.0 as available_balance'))
+        $result = DB::connection('readonly')->table('payment_logs as p')
+//            ->select(DB::raw('CEILING((CAST(SUM(p.income)/2 - pt.payouts_sum AS numeric) * 20)) / 20.0 as available_balance'))
+            ->select(DB::raw('CEIL((SUM(p.income)/2 - COALESCE(pt.payouts_sum, 0)) * 20) / 20.0 as available_balance'))
             ->join('users as u', 'u.id', '=', 'p.user_id')
             ->join('sources as s', DB::raw("cast(u.registered_params as jsonb)->>'source'"), '=', 's.name')
             ->join('partners as pp', 'pp.id', '=', 's.partner_id')
             ->where('p.status', true)
             ->where('pp.id', $authUser->partner_id)
+            ->where('u.offer_id', 6)
             ->join(DB::raw("(SELECT SUM(amount) as payouts_sum FROM payment_to_partners WHERE partner_id = $authUser->partner_id) as pt"), DB::raw('1'), '=', DB::raw('1'))
             ->groupBy('pt.payouts_sum')
             ->get();
 
-if ($result->isNotEmpty()){
-    $balances = $result[0]->available_balance;
-    $available_balances = number_format($balances, 2, '.', '');
-}else{
-    $available_balances = 0;
-}
+        if ($result->isNotEmpty()) {
+            $available_balances = $result[0]->available_balance;
+//    $available_balances = number_format($balances, 2, '.', '');
+        } else {
+            $available_balances = 0;
+        }
 
 //------------------------------- Таблица подписчиков  -----------------------------------
 
@@ -202,7 +204,7 @@ if ($result->isNotEmpty()){
             ->get();
 
         $tableScribers = $result->map(function ($item) {
-            $rounded = number_format($item->total_income , 2, '.', '');
+            $rounded = number_format($item->total_income, 2, '.', '');
             $rounded_value = rtrim($rounded, '0');
             if (substr($rounded_value, -1) == '.') {
                 $rounded_value = rtrim($rounded_value, '.');
