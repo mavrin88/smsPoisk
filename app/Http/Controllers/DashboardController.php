@@ -14,7 +14,7 @@ class DashboardController extends Controller
     {
 
         $authUser = \auth()->user();
-        $source = DB::connection('manager')->table('sources')->where('partner_id', $authUser->partner_id)->first();
+        $source = DB::connection('manager')->table('sources')->where('partner_id', $authUser->partner_id)->orderBy('id', 'desc')->first();
 
 
 //------------------------------- + Виджет текущего баланса за весь период: -----------------------------------
