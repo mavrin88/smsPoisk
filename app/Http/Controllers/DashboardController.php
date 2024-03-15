@@ -203,11 +203,9 @@ if ($result->isNotEmpty()){
 
         $tableScribers = $result->map(function ($item) {
             $rounded = number_format($item->total_income , 2, '.', '');
-
-            if (is_int($item->total_income)){
-                $rounded_value = $item->total_income;
-            }else{
-                $rounded_value = rtrim($rounded, '0');
+            $rounded_value = rtrim($rounded, '0');
+            if (substr($rounded_value, -1) == '.') {
+                $rounded_value = rtrim($rounded_value, '.');
             }
 
             $newObject = new \stdClass;
