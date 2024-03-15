@@ -202,10 +202,11 @@ if ($result->isNotEmpty()){
             ->get();
 
         $tableScribers = $result->map(function ($item) {
+            $rounded = number_format($item->total_income , 2, '.', '');
+
             if (is_int($item->total_income)){
                 $rounded_value = $item->total_income;
             }else{
-                $rounded = number_format($item->total_income , 2, '.', '');
                 $rounded_value = rtrim($rounded, '0');
             }
 
