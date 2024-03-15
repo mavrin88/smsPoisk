@@ -27,6 +27,7 @@ class DashboardController extends Controller
             })
             ->join('partners as pp', 'pp.id', '=', 's.partner_id')
             ->where('p.status', true)
+            ->where('u.offer_id', 6)
             ->where('pp.id', $authUser->partner_id)
             ->first()
             ->total_income;
